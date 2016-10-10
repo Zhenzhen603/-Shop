@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="false" />
+    
+    <package name="default" namespace="/" extends="struts-default">
+		<!-- 配置首页访问的action -->
+		<action name="index" class="indexAction">
+			<result name="indexSuccess">/WEB-INF/jsp/index.jsp</result>
+		</action>
+		
+		<!-- 配置用户action -->
+		<action name="user_*" class="userAction"  method="{1}">
+		
+		<!-- 这是 UserAction-user_login-validation.xml和UserAction-user_regist-validation.xml
+		的说明   这两个验证的时候，如果没有通过，会默认跳转到一个页面。这个页面由action负责。在同一Action类中，如果存在对多个
+		方法的xml验证，需要在方法名上注释@inputConfigInputConfig(resultName="?"),从而确定该方法验证不通过时的返回值，从而
+		确定执行哪一个action-->
+			<result name="loginInput">/WEB-INF/jsp/loginPage.jsp</result>
+			<result name="registInput">/WEB-INF/jsp/registPage.jsp</result>
+			
+			
+			<result name="registSuccess">/WEB-INF/jsp/msg.jsp</result>
+			<result name="registPage">/WEB-INF/jsp/registPage.jsp</result>
+			<result name="activeSuccess">/WEB-INF/jsp/index.jsp</result>
+			<result name="activeFail">/WEB-INF/jsp/registPage.jsp</result>
+			<result name="loginPage">/WEB-INF/jsp/loginPage.jsp</result>
+			<result name="loginSuccess" type="redirectAction">index</result>
+			<result name="quitSuccess" type="redirectAction">index</result>
+		</action>
+		
+		<!-- 配置查询二级分类下商品的Action -->
+		<action name="product_*" class="productAction" method="{1}">
+			<result name="findByCidSuccess">/WEB-INF/jsp/list.jsp</result>
+			<result name="findByPidSuccess">/WEB-INF/jsp/desc.jsp</result>
+			<result name="findByCsidSuccess">/WEB-INF/jsp/list.jsp</result>
+		</action>
+		<action name="cart_*" class="cartAction" method="{1}">
+			<result name="addCartSuccess">/WEB-INF/jsp/cart.jsp</result>
+		</action>
+	
+    </package>
+
+</struts>
